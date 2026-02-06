@@ -11,6 +11,7 @@ use App\Models\PsychosocialActivity;
 use App\Models\Sport;
 use App\Models\FitnessSchedule;
 use App\Models\Badge;
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -128,6 +129,11 @@ class AdminDashboardController extends Controller
             ->orderBy('psychosocial_notes_count', 'desc')
             ->take(5)
             ->get();
+
+        $barcodeRequests = Notification::where('category', 'kartu-request')
+            ->latest()
+            ->limit(5)
+            ->get();
         
         return view('dashboard.admin', compact(
             'totalUsers',
@@ -155,7 +161,8 @@ class AdminDashboardController extends Controller
             'moodDistribution',
             'upcomingSchedules',
             'newUsersThisMonth',
-            'topParticipants'
+            'topParticipants',
+            'barcodeRequests'
         ));
     }
 }

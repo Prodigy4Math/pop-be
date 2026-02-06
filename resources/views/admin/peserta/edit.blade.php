@@ -44,7 +44,7 @@
                         <div class="mb-3">
                             <label for="sport_interest_id" class="form-label fw-bold">Olahraga yang Diminati</label>
                             <select class="form-select @error('sport_interest_id') is-invalid @enderror"
-                                    id="sport_interest_id" name="sport_interest_id">
+                                    id="sport_interest_id" name="sport_interest_id" required>
                                 <option value="">Pilih Olahraga</option>
                                 @foreach($sports as $sport)
                                     <option value="{{ $sport->id }}" {{ old('sport_interest_id', $peserta->sport_interest_id) == $sport->id ? 'selected' : '' }}>
@@ -62,7 +62,7 @@
                             <div class="col-md-6 mb-3">
                                 <label for="age" class="form-label fw-bold">Umur</label>
                                 <input type="number" class="form-control @error('age') is-invalid @enderror" 
-                                       id="age" name="age" value="{{ old('age', $peserta->age) }}" min="5" max="30">
+                                       id="age" name="age" value="{{ old('age', $peserta->age) }}" min="5" max="30" required>
                                 @error('age')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -72,7 +72,7 @@
                             <div class="col-md-6 mb-3">
                                 <label for="gender" class="form-label fw-bold">Jenis Kelamin</label>
                                 <select class="form-select @error('gender') is-invalid @enderror" 
-                                        id="gender" name="gender">
+                                        id="gender" name="gender" required>
                                     <option value="">Pilih Jenis Kelamin</option>
                                     <option value="Laki-laki" {{ old('gender', $peserta->gender) == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                                     <option value="Perempuan" {{ old('gender', $peserta->gender) == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
@@ -87,7 +87,7 @@
                         <div class="mb-3">
                             <label for="school" class="form-label fw-bold">Asal Sekolah</label>
                             <input type="text" class="form-control @error('school') is-invalid @enderror" 
-                                   id="school" name="school" value="{{ old('school', $peserta->school) }}">
+                                   id="school" name="school" value="{{ old('school', $peserta->school) }}" required>
                             @error('school')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -97,7 +97,7 @@
                         <div class="mb-3">
                             <label for="phone" class="form-label fw-bold">Nomor Telepon</label>
                             <input type="tel" class="form-control @error('phone') is-invalid @enderror" 
-                                   id="phone" name="phone" value="{{ old('phone', $peserta->phone) }}">
+                                   id="phone" name="phone" value="{{ old('phone', $peserta->phone) }}" required>
                             @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -110,7 +110,7 @@
                         <div class="mb-3">
                             <label for="guardian_name" class="form-label fw-bold">Nama Wali</label>
                             <input type="text" class="form-control @error('guardian_name') is-invalid @enderror" 
-                                   id="guardian_name" name="guardian_name" value="{{ old('guardian_name', $peserta->guardian_name) }}">
+                                   id="guardian_name" name="guardian_name" value="{{ old('guardian_name', $peserta->guardian_name) }}" required>
                             @error('guardian_name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -120,7 +120,7 @@
                         <div class="mb-3">
                             <label for="guardian_phone" class="form-label fw-bold">Nomor Telepon Wali</label>
                             <input type="tel" class="form-control @error('guardian_phone') is-invalid @enderror" 
-                                   id="guardian_phone" name="guardian_phone" value="{{ old('guardian_phone', $peserta->guardian_phone) }}">
+                                   id="guardian_phone" name="guardian_phone" value="{{ old('guardian_phone', $peserta->guardian_phone) }}" required>
                             @error('guardian_phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

@@ -15,6 +15,12 @@
                     <a href="{{ route('admin.peserta.edit', $peserta) }}" class="btn btn-warning">
                         <i class="fas fa-edit me-2"></i>Edit
                     </a>
+                    <form action="{{ route('admin.peserta.barcode.send', $peserta) }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-paper-plane me-2"></i>Kirim Kartu
+                        </button>
+                    </form>
                     <a href="{{ route('admin.peserta.index') }}" class="btn btn-secondary">
                         <i class="fas fa-arrow-left me-2"></i>Kembali
                     </a>
@@ -157,7 +163,7 @@
                         <div class="text-start mb-3">
                             <div class="fw-semibold">{{ $peserta->name }}</div>
                             <div class="text-muted small">
-                                Umur: {{ $peserta->age ?? '-' }} tahun · Olahraga: {{ $peserta->sportInterest?->name ?? '-' }}
+                                Umur: {{ $peserta->age ?? '-' }} tahun &middot; Olahraga: {{ $peserta->sportInterest?->name ?? '-' }}
                             </div>
                             <div class="text-muted small">ID: {{ $peserta->participant_code ?? '-' }}</div>
                         </div>

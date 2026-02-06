@@ -9,7 +9,7 @@ class ProgressTrackingController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        $user = auth('peserta')->user();
         $totalAttendance = $user->attendance()->count();
         $presentAttendance = $user->attendance()->where('status', 'present')->count();
         $attendancePercentage = $totalAttendance > 0 ? round(($presentAttendance / $totalAttendance) * 100, 2) : 0;
@@ -28,7 +28,7 @@ class ProgressTrackingController extends Controller
 
     public function badges()
     {
-        $user = auth()->user();
+        $user = auth('peserta')->user();
         $badges = $user->badges()->paginate(12);
         return view('peserta.badges.index', compact('badges'));
     }

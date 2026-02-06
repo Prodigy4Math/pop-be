@@ -10,7 +10,7 @@ class PesertaMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || !auth()->user()->isPeserta()) {
+        if (!auth('peserta')->check() || !auth('peserta')->user()->isPeserta()) {
             return redirect('/login')->with('error', 'Unauthorized access');
         }
 

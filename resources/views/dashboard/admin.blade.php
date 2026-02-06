@@ -14,7 +14,7 @@
                             <h1 class="fw-bold mb-2">
                                 <i class="fas fa-shield-alt me-3"></i>Dashboard Admin
                             </h1>
-                            <p class="mb-0 opacity-90">Selamat datang, {{ Auth::user()->name }}! Pantau semua aktivitas dan progress program.</p>
+                            <p class="mb-0 opacity-90">Selamat datang, {{ Auth::guard('admin')->user()->name }}! Pantau semua aktivitas dan progress program.</p>
                         </div>
                         <div class="text-end">
                             <div class="badge bg-black bg-opacity-20 px-3 py-2">
@@ -172,6 +172,42 @@
 
         <!-- Sidebar Information -->
         <div class="col-lg-4">
+            <!-- Barcode Requests -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white border-bottom py-3">
+                    <h6 class="mb-0 fw-bold">
+                        <i class="fas fa-id-card me-2 text-primary"></i>Permintaan Kartu Peserta
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    @forelse($barcodeRequests ?? [] as $request)
+                    <div class="p-3 border-bottom">
+                        <div class="d-flex align-items-start">
+                            <div class="flex-shrink-0">
+                                <div class="bg-primary bg-opacity-10 rounded-circle p-2">
+                                    <i class="fas fa-user text-primary"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 fw-bold">{{ $request->title }}</h6>
+                                <small class="text-muted d-block">{{ $request->message }}</small>
+                                @if($request->related_id)
+                                    <a href="{{ route('admin.peserta.show', $request->related_id) }}" class="btn btn-sm btn-outline-primary mt-2">
+                                        Lihat Peserta
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @empty
+                    <div class="p-3 text-center text-muted">
+                        <i class="fas fa-inbox fs-3 mb-2"></i>
+                        <p class="mb-0 small">Belum ada permintaan kartu</p>
+                    </div>
+                    @endforelse
+                </div>
+            </div>
+
             <!-- Upcoming Schedules -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-header bg-white border-bottom py-3">

@@ -112,21 +112,39 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
-                    @auth
+                    @auth('peserta')
+                        @if(Auth::guard('peserta')->user()->isPeserta())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('peserta.dashboard') }}">
+                                    <i class="fas fa-home me-2"></i>Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('peserta.achievements.index') }}">
+                                    <i class="fas fa-trophy me-2"></i>Prestasi/Proposal
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('peserta.loans.index') }}">
+                                    <i class="fas fa-hand-holding-heart me-2"></i>Peminjaman Alat
+                                </a>
+                            </li>
+                        @endif
                         <li class="nav-item">
                             <span class="nav-link">
-                                <i class="fas fa-user-circle me-2"></i>{{ Auth::user()->name }}
+                                <i class="fas fa-user-circle me-2"></i>{{ Auth::guard('peserta')->user()->name }}
                             </span>
                         </li>
                         <li class="nav-item">
-                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            <form action="{{ route('logout.peserta') }}" method="POST" class="d-inline">
                                 @csrf
                                 <button type="submit" class="btn btn-logout btn-sm">
                                     <i class="fas fa-sign-out-alt me-2"></i>Logout
                                 </button>
                             </form>
                         </li>
-                    @else
+                    @endauth
+                    @guest('peserta')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">
                                 <i class="fas fa-sign-in-alt me-2"></i>Login
@@ -137,7 +155,7 @@
                                 <i class="fas fa-user-plus me-2"></i>Register
                             </a>
                         </li>
-                    @endauth
+                    @endguest
                 </ul>
             </div>
         </div>
@@ -163,6 +181,15 @@
             <div class="container-fluid">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="container-fluid">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             </div>

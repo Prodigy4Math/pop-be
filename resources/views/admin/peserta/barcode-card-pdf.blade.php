@@ -67,7 +67,7 @@
         <div class="header">Kartu Peserta</div>
         <div class="name">{{ $peserta->name }}</div>
         <div class="code">{{ $peserta->participant_code }}</div>
-        <div class="meta">Umur: {{ $peserta->age ?? '-' }} th · Olahraga: {{ $peserta->sportInterest?->name ?? '-' }}</div>
+        <div class="meta">Umur: {{ $peserta->age ?? '-' }} th &middot; Olahraga: {{ $peserta->sportInterest?->name ?? '-' }}</div>
         <div class="qr-wrap">
             {!! $barcodeSvg !!}
         </div>

@@ -52,7 +52,7 @@
         <div class="card">
             <div class="title">{{ $peserta->name }}</div>
             <div class="code">{{ $peserta->participant_code }}</div>
-            <div class="meta">Umur: {{ $peserta->age ?? '-' }} tahun · Olahraga: {{ $peserta->sportInterest?->name ?? '-' }}</div>
+            <div class="meta">Umur: {{ $peserta->age ?? '-' }} tahun &middot; Olahraga: {{ $peserta->sportInterest?->name ?? '-' }}</div>
             <div>{!! $barcodeSvg !!}</div>
             <div class="label">Scan untuk verifikasi kehadiran</div>
         </div>

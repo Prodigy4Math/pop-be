@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Sport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,8 @@ class AuthController extends Controller
 
     public function showRegisterForm()
     {
-        return view('auth.register');
+        $sports = Sport::orderBy('name')->get();
+        return view('auth.register', compact('sports'));
     }
 
     public function register(Request $request)
@@ -25,11 +27,13 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'confirmed', 'min:8'],
-            'age' => ['nullable', 'integer', 'min:5', 'max:100'],
-            'school' => ['nullable', 'string', 'max:255'],
-            'gender' => ['nullable', 'in:Laki-laki,Perempuan'],
-            'phone' => ['nullable', 'string', 'max:15'],
-            'guardian_name' => ['nullable', 'string', 'max:255'],
+            'age' => ['required', 'integer', 'min:5', 'max:30'],
+            'school' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'in:Laki-laki,Perempuan'],
+            'phone' => ['required', 'string', 'max:15'],
+            'guardian_name' => ['required', 'string', 'max:255'],
+            'guardian_phone' => ['required', 'string', 'max:15'],
+            'sport_interest_id' => ['required', 'exists:sports,id'],
         ]);
 
         $user = User::create([
@@ -37,49 +41,58 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => 'peserta',
-            'age' => $validated['age'] ?? null,
-            'school' => $validated['school'] ?? null,
-            'gender' => $validated['gender'] ?? null,
-            'phone' => $validated['phone'] ?? null,
-            'guardian_name' => $validated['guardian_name'] ?? null,
+            'age' => $validated['age'],
+            'school' => $validated['school'],
+            'gender' => $validated['gender'],
+            'phone' => $validated['phone'],
+            'guardian_name' => $validated['guardian_name'],
+            'guardian_phone' => $validated['guardian_phone'],
+            'sport_interest_id' => $validated['sport_interest_id'],
         ]);
 
-        Auth::login($user);
+        Auth::guard('peserta')->login($user);
         return redirect()->intended(route('peserta.dashboard'));
     }
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $validated = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-
-            $user = Auth::user();
-            if (! $user->is_active) {
-                Auth::logout();
-                return back()->withErrors(['email' => 'Akun dinonaktifkan. Hubungi admin.']);
-            }
-
-            if ($user->isAdmin()) {
-                return redirect()->intended(route('admin.dashboard'));
-            }
-
-            return redirect()->intended(route('peserta.dashboard'));
+        $user = User::where('email', $validated['email'])->first();
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
+            return back()->withErrors([
+                'email' => 'Kredensial salah.',
+            ])->onlyInput('email');
         }
 
-        return back()->withErrors([
-            'email' => 'Kredensial salah.',
-        ])->onlyInput('email');
+        if (! $user->is_active) {
+            return back()->withErrors(['email' => 'Akun dinonaktifkan. Hubungi admin.']);
+        }
+
+        $guard = $user->isAdmin() ? 'admin' : 'peserta';
+        Auth::guard($guard)->login($user, $request->boolean('remember'));
+        $request->session()->regenerate();
+
+        if ($guard === 'admin') {
+            return redirect()->intended(route('admin.dashboard'));
+        }
+
+        return redirect()->intended(route('peserta.dashboard'));
     }
 
-    public function logout(Request $request)
+    public function logoutAdmin(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
+        Auth::guard('admin')->logout();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
+    }
+
+    public function logoutPeserta(Request $request)
+    {
+        Auth::guard('peserta')->logout();
         $request->session()->regenerateToken();
         return redirect()->route('login');
     }

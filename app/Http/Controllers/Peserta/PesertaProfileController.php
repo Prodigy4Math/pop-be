@@ -4,18 +4,19 @@ namespace App\Http\Controllers\Peserta;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\ParticipantBarcodeService;
 
 class PesertaProfileController extends Controller
 {
     public function show()
     {
-        $user = auth()->user();
+        $user = auth('peserta')->user();
         return view('peserta.profile.show', compact('user'));
     }
 
     public function edit()
     {
-        $user = auth()->user();
+        $user = auth('peserta')->user();
         return view('peserta.profile.edit', compact('user'));
     }
 
@@ -23,16 +24,19 @@ class PesertaProfileController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . auth()->id(),
-            'phone' => 'nullable|string|max:20',
-            'school' => 'nullable|string|max:255',
-            'age' => 'required|integer|min:5|max:100',
+            'email' => 'required|email|unique:users,email,' . auth('peserta')->id(),
+            'phone' => 'required|string|max:20',
+            'school' => 'required|string|max:255',
+            'age' => 'required|integer|min:5|max:30',
             'gender' => 'required|in:Laki-laki,Perempuan',
-            'guardian_name' => 'nullable|string|max:255',
-            'guardian_phone' => 'nullable|string|max:20'
+            'guardian_name' => 'required|string|max:255',
+            'guardian_phone' => 'required|string|max:20'
         ]);
 
-        auth()->user()->update($validated);
+        $user = auth('peserta')->user();
+        $user->update($validated);
+        app(ParticipantBarcodeService::class)->refreshIfNeeded($user);
+
         return redirect()->route('peserta.profile.show')
             ->with('success', 'Profil berhasil diperbarui');
     }

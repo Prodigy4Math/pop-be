@@ -18,7 +18,7 @@ class FitnessActivityController extends Controller
 
     public function attendance()
     {
-        $user = auth()->user();
+        $user = auth('peserta')->user();
         $attendance = $user->attendance()
             ->with('schedule.sport')
             ->paginate(15);
@@ -27,7 +27,7 @@ class FitnessActivityController extends Controller
 
     public function progress()
     {
-        $user = auth()->user();
+        $user = auth('peserta')->user();
         $progressNotes = $user->progressNotes()
             ->with('sport')
             ->paginate(15);

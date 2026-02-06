@@ -84,7 +84,7 @@
                             <div class="col-md-6 mb-3">
                                 <label for="age" class="form-label fw-bold">Umur</label>
                                 <input type="number" class="form-control @error('age') is-invalid @enderror" 
-                                       id="age" name="age" value="{{ old('age') }}" min="5" max="30">
+                                       id="age" name="age" value="{{ old('age') }}" min="5" max="30" required>
                                 @error('age')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -94,7 +94,7 @@
                             <div class="col-md-6 mb-3">
                                 <label for="gender" class="form-label fw-bold">Jenis Kelamin</label>
                                 <select class="form-select @error('gender') is-invalid @enderror" 
-                                        id="gender" name="gender">
+                                        id="gender" name="gender" required>
                                     <option value="">Pilih Jenis Kelamin</option>
                                     <option value="Laki-laki" {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                                     <option value="Perempuan" {{ old('gender') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
@@ -109,7 +109,7 @@
                         <div class="mb-3">
                             <label for="school" class="form-label fw-bold">Asal Sekolah</label>
                             <input type="text" class="form-control @error('school') is-invalid @enderror" 
-                                   id="school" name="school" value="{{ old('school') }}">
+                                   id="school" name="school" value="{{ old('school') }}" required>
                             @error('school')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -119,7 +119,7 @@
                         <div class="mb-3">
                             <label for="phone" class="form-label fw-bold">Nomor Telepon</label>
                             <input type="tel" class="form-control @error('phone') is-invalid @enderror" 
-                                   id="phone" name="phone" value="{{ old('phone') }}">
+                                   id="phone" name="phone" value="{{ old('phone') }}" required>
                             @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -132,7 +132,7 @@
                         <div class="mb-3">
                             <label for="guardian_name" class="form-label fw-bold">Nama Wali</label>
                             <input type="text" class="form-control @error('guardian_name') is-invalid @enderror" 
-                                   id="guardian_name" name="guardian_name" value="{{ old('guardian_name') }}">
+                                   id="guardian_name" name="guardian_name" value="{{ old('guardian_name') }}" required>
                             @error('guardian_name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -142,7 +142,7 @@
                         <div class="mb-3">
                             <label for="guardian_phone" class="form-label fw-bold">Nomor Telepon Wali</label>
                             <input type="tel" class="form-control @error('guardian_phone') is-invalid @enderror" 
-                                   id="guardian_phone" name="guardian_phone" value="{{ old('guardian_phone') }}">
+                                   id="guardian_phone" name="guardian_phone" value="{{ old('guardian_phone') }}" required>
                             @error('guardian_phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

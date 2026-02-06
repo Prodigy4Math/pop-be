@@ -193,6 +193,7 @@
                             value="{{ old('age') }}"
                             min="5"
                             max="30"
+                            required
                         >
                         @error('age')
                             <small class="text-danger">{{ $message }}</small>
@@ -236,6 +237,7 @@
                             class="form-control @error('school') is-invalid @enderror"
                             placeholder="Nama sekolah"
                             value="{{ old('school') }}"
+                            required
                         >
                         @error('school')
                             <small class="text-danger">{{ $message }}</small>
@@ -244,14 +246,75 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input 
-                        type="password" 
-                        name="password" 
-                        class="form-control @error('password') is-invalid @enderror"
-                        placeholder="Buat password (minimal 6 karakter)"
+                    <label class="form-label">Olahraga Diminati</label>
+                    <select name="sport_interest_id" class="form-control @error('sport_interest_id') is-invalid @enderror" required>
+                        <option value="">Pilih Olahraga</option>
+                        @foreach($sports as $sport)
+                            <option value="{{ $sport->id }}" {{ old('sport_interest_id') == $sport->id ? 'selected' : '' }}>
+                                {{ $sport->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('sport_interest_id')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Nomor HP</label>
+                        <input
+                            type="text"
+                            name="phone"
+                            class="form-control @error('phone') is-invalid @enderror"
+                            placeholder="08xxxxxxxxxx"
+                            value="{{ old('phone') }}"
+                            required
+                        >
+                        @error('phone')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nama Wali/Orangtua</label>
+                        <input
+                            type="text"
+                            name="guardian_name"
+                            class="form-control @error('guardian_name') is-invalid @enderror"
+                            placeholder="Nama wali"
+                            value="{{ old('guardian_name') }}"
+                            required
+                        >
+                        @error('guardian_name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Nomor HP Wali/Orangtua</label>
+                    <input
+                        type="text"
+                        name="guardian_phone"
+                        class="form-control @error('guardian_phone') is-invalid @enderror"
+                        placeholder="08xxxxxxxxxx"
+                        value="{{ old('guardian_phone') }}"
                         required
                     >
+                    @error('guardian_phone')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            name="password" 
+                            class="form-control @error('password') is-invalid @enderror"
+                            placeholder="Buat password (minimal 8 karakter)"
+                            required
+                        >
                     @error('password')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror

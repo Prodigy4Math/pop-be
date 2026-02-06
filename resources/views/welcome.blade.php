@@ -223,6 +223,69 @@
         padding: 36px;
     }
 
+    .map-frame {
+        width: 100%;
+        min-height: 320px;
+        border: 0;
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+    }
+
+    .filter-chip {
+        border: 1px solid #dbe2ea;
+        background: white;
+        color: #1f2937;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .filter-chip.active {
+        background: #0f65cf;
+        color: white;
+        border-color: #0f65cf;
+    }
+
+    .score-card {
+        border-radius: 16px;
+        padding: 18px;
+        background: #0f172a;
+        color: white;
+        position: relative;
+    }
+
+    .score-card .live-badge {
+        position: absolute;
+        right: 16px;
+        top: 16px;
+        background: #ff4757;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+    }
+
+    .gallery-item {
+        border-radius: 14px;
+        background: linear-gradient(120deg, #e2e8f0, #f8fafc);
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #94a3b8;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
+
     .footer-note {
         color: var(--brand-gray);
         font-size: 0.9rem;
@@ -262,7 +325,7 @@
             <h1 class="hero-title">Program Mahasiswa Berdampak Pendanaan Diktisaintek</h1>
             <p class="hero-subtitle">
                 Penguatan Kebugaran, Resiliensi Psikososial, dan Kesiapsiagaan Bencana melalui Program Pembinaan Olahraga
-                bagi Anak–Remaja Pascabencana
+                bagi Anak - Remaja Pascabencana
             </p>
             <div class="hero-campus">Universitas Malikussaleh</div>
 
@@ -335,7 +398,7 @@
                 <div class="col-lg-6">
                     <div class="card-clean h-100">
                         <div class="pill-tag">Tentang Program</div>
-                        <h3 class="section-title">Menguatkan Anak–Remaja Pascabencana</h3>
+                        <h3 class="section-title">Menguatkan Anak - Remaja Pascabencana</h3>
                         <p class="text-muted">
                             Program ini menekankan pendampingan berkelanjutan melalui pelatihan olahraga, pemulihan psikososial,
                             dan edukasi kesiapsiagaan bencana. Setiap peserta mendapat modul, pendampingan, dan pelaporan progres.
@@ -363,26 +426,38 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="card-clean">
-                                    <div class="fw-bold mb-2"><i class="fas fa-calendar-check me-2 text-primary"></i>Jadwal Terbuka</div>
-                                    <div class="text-muted small">Akses jadwal dan lokasi kegiatan terbaru.</div>
+                                    <div class="fw-bold mb-2"><i class="fas fa-calendar-check me-2 text-primary"></i>Jadwal Pertandingan</div>
+                                    <div class="text-muted small">Filter jadwal per cabang olahraga.</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="card-clean">
-                                    <div class="fw-bold mb-2"><i class="fas fa-user-shield me-2 text-success"></i>Registrasi Aman</div>
-                                    <div class="text-muted small">Form pendaftaran peserta dan wali.</div>
+                                    <div class="fw-bold mb-2"><i class="fas fa-trophy me-2 text-warning"></i>Klasemen</div>
+                                    <div class="text-muted small">Peringkat terkini jika tersedia.</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="card-clean">
-                                    <div class="fw-bold mb-2"><i class="fas fa-chart-line me-2 text-info"></i>Laporan Progres</div>
-                                    <div class="text-muted small">Dashboard ringkas capaian program.</div>
+                                    <div class="fw-bold mb-2"><i class="fas fa-broadcast-tower me-2 text-danger"></i>Live Score</div>
+                                    <div class="text-muted small">Skor langsung saat pertandingan berlangsung.</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="card-clean">
-                                    <div class="fw-bold mb-2"><i class="fas fa-id-card me-2 text-warning"></i>Kartu Peserta</div>
-                                    <div class="text-muted small">QR code untuk kehadiran cepat.</div>
+                                    <div class="fw-bold mb-2"><i class="fas fa-images me-2 text-success"></i>Galeri</div>
+                                    <div class="text-muted small">Foto dan video highlight.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-clean">
+                                    <div class="fw-bold mb-2"><i class="fas fa-newspaper me-2 text-info"></i>Berita Resmi</div>
+                                    <div class="text-muted small">Pengumuman dan update panitia.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-clean">
+                                    <div class="fw-bold mb-2"><i class="fas fa-running me-2 text-primary"></i>Cabang Olahraga</div>
+                                    <div class="text-muted small">Daftar olahraga yang dipertandingkan.</div>
                                 </div>
                             </div>
                         </div>
@@ -409,6 +484,207 @@
                             </a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section pt-0">
+        <div class="container">
+            <div class="row g-4 align-items-stretch">
+                <div class="col-lg-6">
+                    <div class="card-clean h-100">
+                        <div class="pill-tag">Lokasi Kegiatan</div>
+                        <h3 class="section-title">Desa Jongok Meluem</h3>
+                        <p class="text-muted">
+                            Kecamatan Kebayakan, Aceh Tengah. Titik utama kegiatan dipusatkan di area lapangan desa dan
+                            fasilitas pendukung masyarakat.
+                        </p>
+                        <div class="row g-3 mt-3">
+                            <div class="col-md-6">
+                                <div class="card-clean">
+                                    <div class="fw-bold mb-1">Alamat</div>
+                                    <div class="text-muted small">Desa Jongok Meluem, Kebayakan, Aceh Tengah</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-clean">
+                                    <div class="fw-bold mb-1">Koordinat</div>
+                                    <div class="text-muted small">4.6408063, 96.854117</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <iframe
+                        class="map-frame"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d698.9998005180341!2d96.854117!3d4.6408063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sid!4v1738850000000">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="card-clean h-100">
+                        <div class="pill-tag">Jadwal Pertandingan</div>
+                        <h3 class="section-title">Agenda Per Cabang</h3>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <a class="filter-chip {{ empty($sportId) ? 'active' : '' }}" href="{{ route('landing') }}">Semua</a>
+                            @foreach($sports as $sport)
+                                <a class="filter-chip {{ (int) $sportId === $sport->id ? 'active' : '' }}"
+                                   href="{{ route('landing', ['sport_id' => $sport->id]) }}">
+                                    {{ $sport->name }}
+                                </a>
+                            @endforeach
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Cabang</th>
+                                        <th>Pertandingan</th>
+                                        <th>Lokasi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($schedules as $schedule)
+                                        <tr>
+                                            <td>{{ $schedule->match_date->format('d M Y H:i') }}</td>
+                                            <td>{{ $schedule->sport->name ?? '-' }}</td>
+                                            <td>
+                                                @if($schedule->team_home || $schedule->team_away)
+                                                    {{ $schedule->team_home ?? '-' }} vs {{ $schedule->team_away ?? '-' }}
+                                                @else
+                                                    {{ $schedule->title ?? '-' }}
+                                                @endif
+                                            </td>
+                                            <td>{{ $schedule->location ?? '-' }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center text-muted">Belum ada jadwal.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-muted small">Filter akan menampilkan jadwal sesuai cabang olahraga.</div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card-clean mb-4">
+                        <div class="pill-tag">Live Score</div>
+                        <h3 class="section-title">Pertandingan Berlangsung</h3>
+                        @forelse($liveMatches as $live)
+                            <div class="score-card mb-3">
+                                <span class="live-badge">LIVE</span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="fw-bold">{{ $live->team_home ?? $live->title ?? 'Tim A' }}</div>
+                                        <div class="text-white-50 small">{{ $live->sport->name ?? '-' }}</div>
+                                    </div>
+                                    <div class="display-6 fw-bold">{{ $live->score_home ?? 0 }}</div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <div>
+                                        <div class="fw-bold">{{ $live->team_away ?? 'Tim B' }}</div>
+                                        <div class="text-white-50 small">{{ $live->match_date->format('d M Y H:i') }}</div>
+                                    </div>
+                                    <div class="display-6 fw-bold">{{ $live->score_away ?? 0 }}</div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-muted small">Belum ada pertandingan live.</div>
+                        @endforelse
+                        <div class="text-muted small mt-3">Live score tampil otomatis saat pertandingan aktif.</div>
+                    </div>
+
+                    <div class="card-clean">
+                        <div class="pill-tag">Klasemen</div>
+                        <h3 class="section-title">Peringkat Teratas</h3>
+                        @if($standings->count() > 0)
+                            <ul class="list-unstyled mb-0">
+                                @foreach($standings as $standing)
+                                    <li class="d-flex justify-content-between mb-2">
+                                        <span>{{ $standing->team_name }}</span>
+                                        <span class="fw-bold">{{ $standing->points }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <div class="text-muted small">Belum ada data klasemen.</div>
+                        @endif
+                        <div class="text-muted small mt-2">Klasemen real-time jika data tersedia.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section pt-0">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <div class="card-clean h-100">
+                        <div class="pill-tag">Galeri Highlight</div>
+                        <h3 class="section-title">Foto & Video</h3>
+                        <div class="gallery-grid">
+                            @forelse($gallery as $item)
+                                <a class="gallery-item" href="{{ $item->media_url }}" target="_blank" rel="noopener noreferrer">
+                                    {{ $item->title ?? ($item->type === 'video' ? 'Video' : 'Foto') }}
+                                </a>
+                            @empty
+                                <div class="gallery-item">Belum Ada</div>
+                            @endforelse
+                        </div>
+                        <div class="text-muted small mt-3">Galeri akan diperbarui secara berkala.</div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="card-clean h-100">
+                        <div class="pill-tag">Berita & Pengumuman</div>
+                        <h3 class="section-title">Info Resmi</h3>
+                        <div class="timeline">
+                            @forelse($news as $item)
+                                <div class="timeline-item">
+                                    <h6>{{ $item->title }}</h6>
+                                    <div class="text-muted small">
+                                        {{ $item->published_at ? $item->published_at->format('d M Y') : 'Tanpa tanggal' }}
+                                        @if($item->excerpt)
+                                            - {{ $item->excerpt }}
+                                        @endif
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="text-muted small">Belum ada berita.</div>
+                            @endforelse
+                        </div>
+                        <div class="text-muted small mt-2">Pengumuman resmi akan tampil di sini.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section pt-0">
+        <div class="container">
+            <div class="card-clean">
+                <div class="pill-tag">Cabang Olahraga</div>
+                <h3 class="section-title">Daftar Olahraga Dipertandingkan</h3>
+                <div class="d-flex flex-wrap gap-2">
+                    @forelse($sports as $sport)
+                        <span class="filter-chip {{ (int) $sportId === $sport->id ? 'active' : '' }}">{{ $sport->name }}</span>
+                    @empty
+                        <span class="text-muted">Belum ada cabang olahraga.</span>
+                    @endforelse
                 </div>
             </div>
         </div>

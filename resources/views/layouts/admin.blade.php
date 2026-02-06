@@ -399,6 +399,21 @@
                     <i class="fas fa-award"></i>
                     <span>Badge</span>
                 </a>
+                <a href="{{ route('admin.achievements.index') }}" 
+                   class="menu-item {{ request()->routeIs('admin.achievements.*') ? 'active' : '' }}">
+                    <i class="fas fa-id-card"></i>
+                    <span>Prestasi/Proposal</span>
+                </a>
+                <a href="{{ route('admin.loans.index') }}" 
+                   class="menu-item {{ request()->routeIs('admin.loans.*') ? 'active' : '' }}">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <span>Peminjaman Alat</span>
+                </a>
+                <a href="{{ route('admin.landing.schedules.index') }}"
+                   class="menu-item {{ request()->routeIs('admin.landing.*') ? 'active' : '' }}">
+                    <i class="fas fa-globe"></i>
+                    <span>Konten Landing</span>
+                </a>
             </div>
         </nav>
     </aside>
@@ -413,13 +428,13 @@
             <div class="top-bar-actions">
                 <div class="user-menu">
                     <div class="user-avatar">
-                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        {{ strtoupper(substr(Auth::guard('admin')->user()->name, 0, 1)) }}
                     </div>
                     <div class="d-none d-md-block">
-                        <div class="fw-semibold">{{ Auth::user()->name }}</div>
+                        <div class="fw-semibold">{{ Auth::guard('admin')->user()->name }}</div>
                         <small class="text-muted">Administrator</small>
                     </div>
-                    <form action="{{ route('logout') }}" method="POST" class="d-inline ms-2">
+                    <form action="{{ route('logout.admin') }}" method="POST" class="d-inline ms-2">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-danger">
                             <i class="fas fa-sign-out-alt"></i>

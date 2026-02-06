@@ -107,4 +107,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Sport::class, 'sport_interest_id');
     }
+
+    public function achievementSubmissions()
+    {
+        return $this->hasMany(AchievementSubmission::class);
+    }
+
+    public function equipmentLoanRequests()
+    {
+        return $this->hasMany(EquipmentLoanRequest::class);
+    }
 }

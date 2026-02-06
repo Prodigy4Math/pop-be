@@ -10,31 +10,31 @@
                 <div class="card-body">
                     <dl class="row">
                         <dt class="col-sm-3">Nama</dt>
-                        <dd class="col-sm-9">{{ auth()->user()->name }}</dd>
+                        <dd class="col-sm-9">{{ auth('peserta')->user()->name }}</dd>
 
                         <dt class="col-sm-3">Email</dt>
-                        <dd class="col-sm-9">{{ auth()->user()->email }}</dd>
+                        <dd class="col-sm-9">{{ auth('peserta')->user()->email }}</dd>
 
                         <dt class="col-sm-3">Umur</dt>
-                        <dd class="col-sm-9">{{ auth()->user()->age }} tahun</dd>
+                        <dd class="col-sm-9">{{ auth('peserta')->user()->age }} tahun</dd>
 
                         <dt class="col-sm-3">Jenis Kelamin</dt>
-                        <dd class="col-sm-9">{{ auth()->user()->gender }}</dd>
+                        <dd class="col-sm-9">{{ auth('peserta')->user()->gender }}</dd>
 
                         <dt class="col-sm-3">Sekolah</dt>
-                        <dd class="col-sm-9">{{ auth()->user()->school ?? '-' }}</dd>
+                        <dd class="col-sm-9">{{ auth('peserta')->user()->school ?? '-' }}</dd>
 
                         <dt class="col-sm-3">Nomor HP</dt>
-                        <dd class="col-sm-9">{{ auth()->user()->phone ?? '-' }}</dd>
+                        <dd class="col-sm-9">{{ auth('peserta')->user()->phone ?? '-' }}</dd>
 
                         <dt class="col-sm-3">Nama Wali</dt>
-                        <dd class="col-sm-9">{{ auth()->user()->guardian_name ?? '-' }}</dd>
+                        <dd class="col-sm-9">{{ auth('peserta')->user()->guardian_name ?? '-' }}</dd>
 
                         <dt class="col-sm-3">HP Wali</dt>
-                        <dd class="col-sm-9">{{ auth()->user()->guardian_phone ?? '-' }}</dd>
+                        <dd class="col-sm-9">{{ auth('peserta')->user()->guardian_phone ?? '-' }}</dd>
 
                         <dt class="col-sm-3">Bergabung</dt>
-                        <dd class="col-sm-9">{{ auth()->user()->created_at->format('d-m-Y') }}</dd>
+                        <dd class="col-sm-9">{{ auth('peserta')->user()->created_at->format('d-m-Y') }}</dd>
                     </dl>
 
                     <div class="mt-4">
@@ -53,12 +53,18 @@
                     <hr>
                     <p class="small">
                         <strong>Total Kehadiran:</strong> 
-                        <span class="badge bg-primary">{{ auth()->user()->attendance()->count() }}</span>
+                        <span class="badge bg-primary">{{ auth('peserta')->user()->attendance()->count() }}</span>
                     </p>
                     <p class="small">
                         <strong>Badge Diterima:</strong>
-                        <span class="badge bg-warning">{{ auth()->user()->badges()->count() }}</span>
+                        <span class="badge bg-warning">{{ auth('peserta')->user()->badges()->count() }}</span>
                     </p>
+                    <hr>
+                    <div class="d-grid">
+                        <a href="{{ route('peserta.barcode.show') }}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-id-card me-2"></i>Lihat Kartu Peserta
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
