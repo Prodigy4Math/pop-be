@@ -17,7 +17,7 @@
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <form action="{{ route('admin.fitness.sports.store') }}" method="POST">
+                    <form action="{{ route('admin.fitness.sports.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <!-- Nama Olahraga -->
@@ -37,25 +37,20 @@
                             <select class="form-select @error('category') is-invalid @enderror" 
                                     id="category" name="category" required>
                                 <option value="">Pilih Kategori</option>
-                                <option value="kardio" {{ old('category') == 'kardio' ? 'selected' : '' }}>Kardio</option>
-                                <option value="kekuatan" {{ old('category') == 'kekuatan' ? 'selected' : '' }}>Kekuatan</option>
-                                <option value="fleksibilitas" {{ old('category') == 'fleksibilitas' ? 'selected' : '' }}>Fleksibilitas</option>
+                                <option value="tim" {{ old('category') == 'tim' ? 'selected' : '' }}>Tim</option>
+                                <option value="individu" {{ old('category') == 'individu' ? 'selected' : '' }}>Individu</option>
                             </select>
                             @error('category')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                             <div class="mt-3" id="categoryHelp">
-                                <div class="alert alert-info d-none" data-category="kardio">
-                                    <h6 class="fw-bold mb-1">Kardio</h6>
-                                    <p class="small mb-0 text-muted">Meningkatkan daya tahan jantung-paru. Contoh: lari, bersepeda, skipping.</p>
+                                <div class="alert alert-info d-none" data-category="tim">
+                                    <h6 class="fw-bold mb-1">Tim</h6>
+                                    <p class="small mb-0 text-muted">Olahraga yang dimainkan bersama dalam satu tim. Contoh: sepak bola, voli, basket.</p>
                                 </div>
-                                <div class="alert alert-success d-none" data-category="kekuatan">
-                                    <h6 class="fw-bold mb-1">Kekuatan</h6>
-                                    <p class="small mb-0 text-muted">Menguatkan otot dan power. Contoh: angkat beban, push-up, squat.</p>
-                                </div>
-                                <div class="alert alert-warning d-none" data-category="fleksibilitas">
-                                    <h6 class="fw-bold mb-1">Fleksibilitas</h6>
-                                    <p class="small mb-0 text-muted">Melatih kelenturan dan mobilitas. Contoh: stretching, yoga, pilates.</p>
+                                <div class="alert alert-success d-none" data-category="individu">
+                                    <h6 class="fw-bold mb-1">Individu</h6>
+                                    <p class="small mb-0 text-muted">Olahraga yang dilakukan perorangan. Contoh: lari, badminton, renang.</p>
                                 </div>
                             </div>
                         </div>
@@ -96,11 +91,10 @@
 
                         <!-- Icon -->
                         <div class="mb-3">
-                            <label for="icon" class="form-label fw-bold">Ikon (Font Awesome)</label>
-                            <input type="text" class="form-control @error('icon') is-invalid @enderror" 
-                                   id="icon" name="icon" value="{{ old('icon') }}"
-                                   placeholder="Contoh: dumbbell, running, basketball">
-                            <small class="text-muted">Gunakan nama icon dari Font Awesome (tanpa prefix 'fa-')</small>
+                            <label for="icon" class="form-label fw-bold">Ikon (Gambar)</label>
+                            <input type="file" class="form-control @error('icon') is-invalid @enderror" 
+                                   id="icon" name="icon" accept="image/*">
+                            <small class="text-muted">Format: JPG, PNG, atau WEBP. Maks 2MB.</small>
                             @error('icon')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -139,9 +133,9 @@
                     </h5>
                     <div class="alert alert-info" role="alert">
                         <small>
-                            <p><strong>Kategori:</strong> Pilih antara Kardio, Kekuatan, atau Fleksibilitas</p>
+                            <p><strong>Kategori:</strong> Pilih antara Tim atau Individu</p>
                             <p><strong>Tingkat Kesulitan:</strong> Skala 1-5, semakin tinggi semakin sulit</p>
-                            <p><strong>Ikon:</strong> Lihat <a href="https://fontawesome.com/icons" target="_blank">Font Awesome Icons</a> untuk referensi</p>
+                            <p><strong>Ikon:</strong> Unggah gambar ikon untuk olahraga</p>
                         </small>
                     </div>
                 </div>

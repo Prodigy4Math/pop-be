@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <h2><i class="fas fa-book"></i> {{ $material->title }}</h2>
             <p class="text-muted">
-                <i class="fas fa-tag"></i> {{ $material->disaster_type }}
+                <i class="fas fa-tag"></i> {{ $material->category }}
             </p>
         </div>
         <div class="col-md-4 text-end">
@@ -25,12 +25,12 @@
 
             <h5 class="card-title">Konten Materi</h5>
             <div class="alert alert-info">
-                {!! nl2br(e($material->content)) !!}
+                {!! nl2br(e($material->content_text ?? 'Materi tersedia dalam bentuk file/tautan.')) !!}
             </div>
 
-            @if ($material->file_url)
+            @if ($material->content_url)
                 <hr>
-                <a href="{{ $material->file_url }}" target="_blank" class="btn btn-primary">
+                <a href="{{ $material->content_url }}" target="_blank" class="btn btn-primary">
                     <i class="fas fa-download"></i> Download Materi
                 </a>
             @endif

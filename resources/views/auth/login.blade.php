@@ -2,183 +2,287 @@
 
 @section('content')
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    :root {
+        --ink: #0f172a;
+        --muted: #64748b;
+        --brand: #0ea5e9;
+        --brand-dark: #0284c7;
+        --accent: #f97316;
+        --surface: #ffffff;
+        --border: #e2e8f0;
+        --ring: rgba(14, 165, 233, 0.2);
+    }
+
     .login-wrapper {
         min-height: calc(100vh - 70px);
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-        padding: 40px 20px;
+        background:
+            radial-gradient(1200px 600px at 10% -10%, rgba(14, 165, 233, 0.18), transparent 60%),
+            radial-gradient(900px 500px at 90% 0%, rgba(249, 115, 22, 0.12), transparent 55%),
+            linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+        padding: 48px 20px;
+        font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
     }
 
-    .login-container {
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    .auth-shell {
+        display: grid;
+        grid-template-columns: 1.05fr 1.4fr;
+        gap: 0;
+        background: var(--surface);
+        border-radius: 20px;
+        box-shadow: 0 30px 80px rgba(15, 23, 42, 0.18);
         overflow: hidden;
-        max-width: 450px;
+        max-width: 980px;
         width: 100%;
     }
 
-    .login-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    .brand-panel {
+        padding: 46px 40px;
+        background:
+            linear-gradient(140deg, rgba(14, 165, 233, 0.92), rgba(2, 132, 199, 0.92)),
+            url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140"%3E%3Cg fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"%3E%3Ccircle cx="70" cy="70" r="24"/%3E%3Ccircle cx="70" cy="70" r="48"/%3E%3Ccircle cx="70" cy="70" r="68"/%3E%3C/g%3E%3C/svg%3E');
         color: white;
-        padding: 40px 30px;
-        text-align: center;
+        position: relative;
     }
 
-    .login-header h1 {
-        font-size: 28px;
+    .brand-logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 8px 14px;
+        border-radius: 999px;
         font-weight: 700;
-        margin-bottom: 10px;
+        letter-spacing: 0.5px;
     }
 
-    .login-header p {
+    .brand-badge {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.2);
+        font-size: 20px;
+    }
+
+    .logo-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-top: 22px;
+    }
+
+    .logo-strip img {
+        max-height: 36px;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 999px;
+        padding: 6px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .brand-title {
+        font-size: 30px;
+        font-weight: 800;
+        margin: 24px 0 12px;
+    }
+
+    .brand-subtitle {
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.6;
+        margin-bottom: 24px;
+        font-size: 15px;
+    }
+
+    .brand-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+    }
+
+    .brand-list li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
         font-size: 14px;
-        opacity: 0.9;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .brand-list i {
+        color: #fff;
+        margin-top: 2px;
+    }
+
+    .form-panel {
+        padding: 46px 42px;
+    }
+
+    .form-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+    }
+
+    .form-logo-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 18px;
+    }
+
+    .form-logo-strip img {
+        max-height: 28px;
+        background: #ffffff;
+        border-radius: 999px;
+        padding: 5px 8px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 6px 12px rgba(15, 23, 42, 0.08);
+    }
+
+    .form-header h1 {
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--ink);
         margin: 0;
     }
 
-    .login-body {
-        padding: 40px 30px;
+    .form-header span {
+        font-size: 13px;
+        color: var(--muted);
     }
 
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
     }
 
     .form-label {
         font-weight: 600;
-        color: #333;
+        color: var(--ink);
         margin-bottom: 8px;
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .form-control {
-        border: 1.5px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 12px 15px;
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 14px;
         font-size: 14px;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
     }
 
     .form-control:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        border-color: var(--brand);
+        box-shadow: 0 0 0 4px var(--ring);
         outline: none;
     }
 
     .btn-login {
         width: 100%;
-        padding: 12px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 12px 14px;
+        background: linear-gradient(135deg, var(--brand), var(--brand-dark));
         color: white;
         border: none;
-        border-radius: 8px;
-        font-weight: 600;
+        border-radius: 10px;
+        font-weight: 700;
         font-size: 14px;
         cursor: pointer;
-        transition: all 0.3s ease;
-        margin-top: 10px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin-top: 6px;
     }
 
     .btn-login:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-    }
-
-    .form-check {
-        margin-bottom: 15px;
-    }
-
-    .form-check-input {
-        width: 18px;
-        height: 18px;
-        border: 1.5px solid #e0e0e0;
-        border-radius: 4px;
-        cursor: pointer;
+        box-shadow: 0 12px 24px rgba(14, 165, 233, 0.25);
     }
 
     .form-check-input:checked {
-        background-color: #667eea;
-        border-color: #667eea;
-    }
-
-    .form-check-label {
-        font-size: 14px;
-        color: #666;
-        cursor: pointer;
-        margin-left: 8px;
-    }
-
-    .divider {
-        text-align: center;
-        margin: 25px 0;
-        font-size: 13px;
-        color: #999;
+        background-color: var(--brand);
+        border-color: var(--brand);
     }
 
     .register-link {
         text-align: center;
-        padding-top: 20px;
-        border-top: 1px solid #f0f0f0;
+        padding-top: 18px;
+        border-top: 1px solid #f1f5f9;
         font-size: 14px;
     }
 
     .register-link a {
-        color: #667eea;
+        color: var(--brand-dark);
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 700;
     }
 
     .register-link a:hover {
         text-decoration: underline;
     }
 
-    .demo-info {
-        background: #f0f7ff;
-        border-left: 4px solid #667eea;
-        padding: 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        margin-bottom: 20px;
-        color: #555;
-    }
-
-    .demo-info strong {
-        color: #333;
-        display: block;
-        margin-bottom: 5px;
-    }
-
     .alert-danger {
-        border-radius: 8px;
-        margin-bottom: 20px;
+        border-radius: 10px;
+        margin-bottom: 18px;
+    }
+
+    @media (max-width: 992px) {
+        .auth-shell {
+            grid-template-columns: 1fr;
+        }
+
+        .brand-panel {
+            padding: 36px 30px;
+        }
     }
 
     @media (max-width: 576px) {
-        .login-header {
-            padding: 30px 20px;
+        .form-panel {
+            padding: 32px 24px;
         }
 
-        .login-header h1 {
+        .brand-title {
             font-size: 24px;
-        }
-
-        .login-body {
-            padding: 30px 20px;
         }
     }
 </style>
 
 <div class="login-wrapper">
-    <div class="login-container">
-        <div class="login-header">
-            <h1><i class="fas fa-sign-in-alt me-2"></i>Masuk</h1>
-            <p>Akses dashboard Anda sekarang</p>
+    <div class="auth-shell">
+        <div class="brand-panel">
+            <div class="brand-logo">
+                <span class="brand-badge"><i class="fas fa-medal"></i></span>
+                <span>POP-BE</span>
+            </div>
+            <div class="brand-title">Masuk dan kelola program dengan rapi</div>
+            <div class="brand-subtitle">Dashboard terpusat untuk administrasi, progress peserta, dan pelaporan yang lebih cepat.</div>
+            <ul class="brand-list">
+                <li><i class="fas fa-check-circle"></i>Monitoring aktivitas & laporan realtime</li>
+                <li><i class="fas fa-check-circle"></i>Notifikasi instan untuk setiap pengajuan</li>
+                <li><i class="fas fa-check-circle"></i>Workflow admin yang ringkas & jelas</li>
+            </ul>
         </div>
 
-        <div class="login-body">
+        <div class="form-panel">
+            <div class="form-logo-strip">
+                <img src="{{ asset('images/logos/IACBE-Member-with-Accredited-Programs-New-Logo-2024.png') }}" alt="IACBE">
+                <img src="{{ asset('images/logos/logo-bima-21.09.2022.11.56.32.png') }}" alt="BiMA">
+                <img src="{{ asset('images/logos/diktisaintek-berdampak.a30b8719.png') }}" alt="Diktisaintek Berdampak">
+                <img src="{{ asset('images/logos/unimal.png') }}" alt="Universitas Malikussaleh">
+                <img src="{{ asset('images/logos/Logo%20BLU%20Speed.png') }}" alt="BLU">
+                <img src="{{ asset('images/logos/tut-wuri-handayani-logo-with-white-text-png-b461.png') }}" alt="Kemendikbud">
+            </div>
+            <div class="form-header">
+                <h1>Masuk</h1>
+                <span>POP-BE</span>
+            </div>
             @if ($errors->any())
                 <div class="alert alert-danger">
                     @foreach ($errors->all() as $error)
@@ -186,12 +290,6 @@
                     @endforeach
                 </div>
             @endif
-
-            <div class="demo-info">
-                <strong>Demo Akun:</strong>
-                Admin: admin@example.com<br>
-                Password: password
-            </div>
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf

@@ -18,11 +18,11 @@ class EquipmentLoanController extends Controller
         return view('admin.loans.index', compact('requests'));
     }
 
-    public function show(EquipmentLoanRequest $request)
+    public function show(EquipmentLoanRequest $loan)
     {
-        $request->load(['user', 'sport']);
+        $loan->load(['user', 'sport']);
         return view('admin.loans.show', [
-            'loan' => $request,
+            'loan' => $loan,
         ]);
     }
 

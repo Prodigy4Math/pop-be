@@ -27,11 +27,10 @@
             <table class="table table-hover mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th>Nama Simulasi</th>
+                        <th>Judul Simulasi</th>
                         <th>Tipe Bencana</th>
                         <th>Lokasi</th>
                         <th>Tanggal</th>
-                        <th>Kapasitas</th>
                         <th>Status</th>
                         <th>Aksi</th>
                     </tr>
@@ -39,11 +38,10 @@
                 <tbody>
                     @forelse ($simulations as $sim)
                         <tr>
-                            <td><strong>{{ $sim->name }}</strong></td>
+                            <td><strong>{{ $sim->title }}</strong></td>
                             <td><span class="badge bg-danger">{{ $sim->disaster_type }}</span></td>
                             <td>{{ $sim->location }}</td>
-                            <td>{{ $sim->simulation_date->format('d-m-Y') }}</td>
-                            <td>{{ $sim->max_participants }} peserta</td>
+                            <td>{{ $sim->simulation_date->format('d-m-Y') }} <span class="text-muted small">({{ $sim->start_time }} - {{ $sim->end_time }})</span></td>
                             <td>
                                 @if ($sim->is_active)
                                     <span class="badge bg-success">Aktif</span>
@@ -66,7 +64,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center text-muted py-3">Tidak ada data</td>
+                            <td colspan="6" class="text-center text-muted py-3">Tidak ada data</td>
                         </tr>
                     @endforelse
                 </tbody>

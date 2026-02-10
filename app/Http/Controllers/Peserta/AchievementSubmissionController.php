@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Peserta;
 
 use App\Http\Controllers\Controller;
 use App\Models\AchievementSubmission;
+use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -41,7 +43,7 @@ class AchievementSubmissionController extends Controller
             $attachmentPath = $file->store('achievement-attachments');
         }
 
-        AchievementSubmission::create([
+        $submission = AchievementSubmission::create([
             'user_id' => auth('peserta')->id(),
             'title' => $validated['title'],
             'category' => $validated['category'],
@@ -51,6 +53,19 @@ class AchievementSubmissionController extends Controller
             'attachment_name' => $attachmentName,
             'status' => 'pending',
         ]);
+
+        $admins = User::where('role', 'admin')->get(['id']);
+        foreach ($admins as $admin) {
+            Notification::create([
+                'user_id' => $admin->id,
+                'title' => 'Pengajuan Prestasi/Proposal Baru',
+                'message' => 'Peserta ' . auth('peserta')->user()->name . ' mengirim ' . $validated['category'] . ' untuk verifikasi.',
+                'type' => 'info',
+                'category' => 'achievement-submission',
+                'related_model' => AchievementSubmission::class,
+                'related_id' => $submission->id,
+            ]);
+        }
 
         return redirect()
             ->route('peserta.achievements.index')

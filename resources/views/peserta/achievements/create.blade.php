@@ -7,7 +7,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
                     <div>
-                        <h3 class="fw-bold mb-1"><i class="fas fa-trophy me-2 text-warning"></i>Tambah Prestasi/Proposal</h3>
+                        <h3 class="fw-bold mb-1"><i class="fas fa-trophy me-2 text-warning"></i>Tambah Prestasi</h3>
                         <p class="text-muted mb-0">Lengkapi data untuk dikirim ke admin.</p>
                     </div>
                     <a href="{{ route('peserta.achievements.index') }}" class="btn btn-outline-secondary mt-3 mt-lg-0">

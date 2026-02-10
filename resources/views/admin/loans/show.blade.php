@@ -27,7 +27,7 @@
                     <p><strong>Peserta:</strong> {{ $loan->user->name ?? '-' }}</p>
                     <p><strong>Olahraga:</strong> {{ $loan->sport->name ?? '-' }}</p>
                     <p><strong>Jumlah:</strong> {{ $loan->quantity }}</p>
-                    <p><strong>Tanggal Dibutuhkan:</strong> {{ $loan->needed_date->format('d-m-Y') }}</p>
+                    <p><strong>Tanggal Dibutuhkan:</strong> {{ $loan->needed_date ? $loan->needed_date->format('d-m-Y') : '-' }}</p>
                     <p><strong>Tanggal Pengembalian:</strong> {{ $loan->return_date ? $loan->return_date->format('d-m-Y') : '-' }}</p>
                     <p><strong>Status:</strong>
                         <span class="badge bg-{{ $loan->status === 'approved' ? 'success' : ($loan->status === 'rejected' ? 'danger' : 'warning') }}">

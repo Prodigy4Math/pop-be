@@ -28,7 +28,7 @@
                 <thead class="table-light">
                     <tr>
                         <th>Judul</th>
-                        <th>Tipe Bencana</th>
+                        <th>Kategori</th>
                         <th>Deskripsi</th>
                         <th>Status</th>
                         <th>Aksi</th>
@@ -38,7 +38,7 @@
                     @forelse ($materials as $material)
                         <tr>
                             <td><strong>{{ $material->title }}</strong></td>
-                            <td><span class="badge bg-warning">{{ $material->disaster_type }}</span></td>
+                            <td><span class="badge bg-warning">{{ $material->category }}</span></td>
                             <td>{{ Str::limit($material->description, 50) }}</td>
                             <td>
                                 @if ($material->is_active)

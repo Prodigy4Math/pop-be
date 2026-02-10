@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('category'); // kardio, kekuatan, fleksibilitas
+            $table->string('category'); // tim, individual.
             $table->integer('difficulty_level'); // 1-5
             $table->string('icon')->nullable();
             $table->timestamps();

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin Panel - {{ config('app.name', 'Penguatan Olahraga') }}</title>
+    <title>Admin Panel - {{ config('app.name', 'POP-BE') }}</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -234,6 +234,68 @@
             font-weight: 600;
         }
 
+        .notif-btn {
+            position: relative;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            color: #334155;
+            transition: all 0.2s ease;
+        }
+
+        .notif-btn:hover {
+            background: #e9ecef;
+            color: #1e293b;
+        }
+
+        .notif-count {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 999px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .notif-menu {
+            width: 360px;
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .notif-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.2s;
+        }
+
+        .notif-item:hover {
+            background: #f8fafc;
+        }
+
+        .notif-item.unread {
+            background: #eef2ff;
+        }
+
+        .notif-item .badge {
+            font-size: 0.65rem;
+        }
+
         /* Content Area */
         .content-area {
             padding: 2rem;
@@ -299,6 +361,27 @@
     </style>
 </head>
 <body>
+    @php
+        $adminUser = Auth::guard('admin')->user();
+        $adminUnreadCount = 0;
+        $adminNotifications = collect();
+        if ($adminUser) {
+            $adminNotifications = \App\Models\Notification::query()
+                ->where(function ($query) use ($adminUser) {
+                    $query->whereNull('user_id')->orWhere('user_id', $adminUser->id);
+                })
+                ->latest()
+                ->limit(5)
+                ->get();
+
+            $adminUnreadCount = \App\Models\Notification::query()
+                ->where(function ($query) use ($adminUser) {
+                    $query->whereNull('user_id')->orWhere('user_id', $adminUser->id);
+                })
+                ->where('is_read', false)
+                ->count();
+        }
+    @endphp
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -394,6 +477,14 @@
             <!-- Badge & Achievement -->
             <div class="menu-section">
                 <span class="menu-section-title">Sistem</span>
+                <a href="{{ route('admin.notifications.index') }}"
+                   class="menu-item {{ request()->routeIs('admin.notifications.*') ? 'active' : '' }}">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifikasi</span>
+                    @if($adminUnreadCount > 0)
+                        <span class="badge bg-danger">{{ $adminUnreadCount > 99 ? '99+' : $adminUnreadCount }}</span>
+                    @endif
+                </a>
                 <a href="{{ route('admin.badges.index') }}" 
                    class="menu-item {{ request()->routeIs('admin.badges.*') ? 'active' : '' }}">
                     <i class="fas fa-award"></i>
@@ -426,6 +517,64 @@
                 <h1 class="top-bar-title mb-0">@yield('page-title', 'Dashboard')</h1>
             </div>
             <div class="top-bar-actions">
+                <div class="dropdown">
+                    <button class="notif-btn" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifikasi">
+                        <i class="fas fa-bell"></i>
+                        @if($adminUnreadCount > 0)
+                            <span class="notif-count">{{ $adminUnreadCount > 99 ? '99+' : $adminUnreadCount }}</span>
+                        @endif
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end notif-menu p-0">
+                        <div class="d-flex align-items-center justify-content-between px-3 py-2 border-bottom bg-white">
+                            <span class="fw-semibold">Notifikasi</span>
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="{{ route('admin.notifications.index') }}" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+                                <form action="{{ route('admin.notifications.readAll') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Tandai Semua</button>
+                                </form>
+                            </div>
+                        </div>
+                        @forelse($adminNotifications as $note)
+                            @php
+                                $link = null;
+                                if ($note->category === 'kartu-request' && $note->related_id) {
+                                    $link = route('admin.peserta.show', $note->related_id);
+                                } elseif ($note->category === 'achievement-submission' && $note->related_id) {
+                                    $link = route('admin.achievements.show', $note->related_id);
+                                } elseif ($note->category === 'loan-request' && $note->related_id) {
+                                    $link = route('admin.loans.show', $note->related_id);
+                                }
+                            @endphp
+                            <div class="notif-item {{ $note->is_read ? '' : 'unread' }}">
+                                <div class="d-flex justify-content-between align-items-start gap-2">
+                                    <div>
+                                        <div class="fw-semibold mb-1">{{ $note->title }}</div>
+                                        <div class="text-muted small">{{ $note->message }}</div>
+                                        <div class="text-muted small mt-1">{{ $note->created_at->diffForHumans() }}</div>
+                                    </div>
+                                    <span class="badge bg-{{ $note->type === 'error' ? 'danger' : $note->type }}">{{ strtoupper($note->type) }}</span>
+                                </div>
+                                <div class="mt-2 d-flex align-items-center gap-2">
+                                    @if($link)
+                                        <a href="{{ $link }}" class="btn btn-sm btn-outline-primary">Buka</a>
+                                    @endif
+                                    @if(!$note->is_read)
+                                        <form action="{{ route('admin.notifications.read', $note) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">Tandai Dibaca</button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                        @empty
+                            <div class="p-4 text-center text-muted">
+                                <i class="fas fa-inbox fs-3 mb-2"></i>
+                                <div class="small">Belum ada notifikasi</div>
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
                 <div class="user-menu">
                     <div class="user-avatar">
                         {{ strtoupper(substr(Auth::guard('admin')->user()->name, 0, 1)) }}

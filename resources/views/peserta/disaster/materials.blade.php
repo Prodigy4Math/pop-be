@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $material->title }}</h5>
                         <p class="small text-muted mb-2">
-                            <i class="fas fa-tag"></i> {{ $material->disaster_type }}
+                            <i class="fas fa-tag"></i> {{ $material->category }}
                         </p>
                         <p class="card-text small">{{ Str::limit($material->description, 80) }}</p>
                     </div>

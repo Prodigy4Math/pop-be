@@ -23,13 +23,23 @@ class DisasterModuleController extends Controller
 
     public function storeMaterial(Request $request)
     {
+        $request->merge([
+            'content_text' => $request->input('content_text', $request->input('content')),
+            'content_url' => $request->input('content_url', $request->input('file_url')),
+            'category' => $request->input('category', $request->input('disaster_type')),
+            'type' => $request->input('type', 'teks'),
+            'difficulty_level' => $request->input('difficulty_level', 1),
+        ]);
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'content' => 'required|string',
-            'disaster_type' => 'required|in:Gempa Bumi,Banjir,Longsor,Tsunami,Angin Puting Beliung,Kebakaran',
-            'file_url' => 'nullable|string|max:500',
-            'is_active' => 'nullable'
+            'content_text' => 'nullable|string',
+            'content_url' => 'nullable|string|max:500',
+            'type' => 'required|in:teks,video,infografis,pdf',
+            'category' => 'required|in:Gempa Bumi,Banjir,Longsor,Tsunami,Angin Puting Beliung,Kebakaran',
+            'difficulty_level' => 'required|integer|min:1|max:5',
+            'is_active' => 'nullable',
         ]);
 
         $validated['is_active'] = $request->has('is_active') ? true : false;
@@ -45,13 +55,23 @@ class DisasterModuleController extends Controller
 
     public function updateMaterial(Request $request, DisasterMaterial $material)
     {
+        $request->merge([
+            'content_text' => $request->input('content_text', $request->input('content')),
+            'content_url' => $request->input('content_url', $request->input('file_url')),
+            'category' => $request->input('category', $request->input('disaster_type')),
+            'type' => $request->input('type', $material->type ?? 'teks'),
+            'difficulty_level' => $request->input('difficulty_level', $material->difficulty_level ?? 1),
+        ]);
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'content' => 'required|string',
-            'disaster_type' => 'required|in:Gempa Bumi,Banjir,Longsor,Tsunami,Angin Puting Beliung,Kebakaran',
-            'file_url' => 'nullable|string|max:500',
-            'is_active' => 'nullable'
+            'content_text' => 'nullable|string',
+            'content_url' => 'nullable|string|max:500',
+            'type' => 'required|in:teks,video,infografis,pdf',
+            'category' => 'required|in:Gempa Bumi,Banjir,Longsor,Tsunami,Angin Puting Beliung,Kebakaran',
+            'difficulty_level' => 'required|integer|min:1|max:5',
+            'is_active' => 'nullable',
         ]);
 
         $validated['is_active'] = $request->has('is_active') ? true : false;
@@ -82,12 +102,13 @@ class DisasterModuleController extends Controller
     public function storeSimulation(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'required|string',
             'disaster_type' => 'required|in:Gempa Bumi,Banjir,Longsor,Tsunami,Angin Puting Beliung,Kebakaran',
             'simulation_date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
             'location' => 'required|string|max:255',
-            'max_participants' => 'required|integer|min:10|max:500',
             'is_active' => 'nullable'
         ]);
 
@@ -105,12 +126,13 @@ class DisasterModuleController extends Controller
     public function updateSimulation(Request $request, DisasterSimulation $simulation)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'required|string',
             'disaster_type' => 'required|in:Gempa Bumi,Banjir,Longsor,Tsunami,Angin Puting Beliung,Kebakaran',
             'simulation_date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
             'location' => 'required|string|max:255',
-            'max_participants' => 'required|integer|min:10|max:500',
             'is_active' => 'nullable'
         ]);
 

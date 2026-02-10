@@ -78,15 +78,18 @@ class PesertaBarcodeController extends Controller
     {
         $user = auth('peserta')->user();
 
-        Notification::create([
-            'user_id' => null,
-            'title' => 'Permintaan Kartu Peserta',
-            'message' => 'Peserta ' . $user->name . ' meminta kartu identitas/barcode.',
-            'type' => 'info',
-            'category' => 'kartu-request',
-            'related_model' => User::class,
-            'related_id' => $user->id,
-        ]);
+        $admins = User::where('role', 'admin')->get(['id']);
+        foreach ($admins as $admin) {
+            Notification::create([
+                'user_id' => $admin->id,
+                'title' => 'Permintaan Kartu Peserta',
+                'message' => 'Peserta ' . $user->name . ' meminta kartu identitas/barcode.',
+                'type' => 'info',
+                'category' => 'kartu-request',
+                'related_model' => User::class,
+                'related_id' => $user->id,
+            ]);
+        }
 
         return redirect()
             ->route('peserta.barcode.show')

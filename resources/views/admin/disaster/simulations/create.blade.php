@@ -14,10 +14,10 @@
                         @csrf
                         
                         <div class="mb-3">
-                            <label class="form-label">Nama Simulasi</label>
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" 
-                                value="{{ old('name') }}" required>
-                            @error('name')
+                            <label class="form-label">Judul Simulasi</label>
+                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" 
+                                value="{{ old('title') }}" required>
+                            @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -56,13 +56,23 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Kapasitas Maksimal (Peserta)</label>
-                            <input type="number" name="max_participants" class="form-control @error('max_participants') is-invalid @enderror" 
-                                value="{{ old('max_participants') }}" min="10" max="500" required>
-                            @error('max_participants')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Jam Mulai</label>
+                                <input type="time" name="start_time" class="form-control @error('start_time') is-invalid @enderror" 
+                                    value="{{ old('start_time') }}" required>
+                                @error('start_time')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Jam Selesai</label>
+                                <input type="time" name="end_time" class="form-control @error('end_time') is-invalid @enderror" 
+                                    value="{{ old('end_time') }}" required>
+                                @error('end_time')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -101,9 +111,6 @@
                     <p class="small text-muted">
                         Simulasi bencana adalah latihan yang dirancang untuk meningkatkan kesiapan dan kemampuan respons terhadap bencana.
                     </p>
-                    <hr>
-                    <h6 class="small">Kapasitas:</h6>
-                    <p class="small">Minimal 10 peserta, maksimal 500 peserta</p>
                 </div>
             </div>
         </div>

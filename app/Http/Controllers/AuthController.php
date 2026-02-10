@@ -12,6 +12,14 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        if (Auth::guard('peserta')->check()) {
+            return redirect()->route('peserta.dashboard');
+        }
+
         return view('auth.login');
     }
 
@@ -71,6 +79,9 @@ class AuthController extends Controller
         if (! $user->is_active) {
             return back()->withErrors(['email' => 'Akun dinonaktifkan. Hubungi admin.']);
         }
+        
+        Auth::guard('admin')->logout();
+        Auth::guard('peserta')->logout();
 
         $guard = $user->isAdmin() ? 'admin' : 'peserta';
         Auth::guard($guard)->login($user, $request->boolean('remember'));

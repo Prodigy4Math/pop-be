@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\DisasterModuleController;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\BadgeController;
 use App\Http\Controllers\Admin\ReportingController;
+use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 use App\Http\Controllers\Admin\AchievementSubmissionController as AdminAchievementSubmissionController;
 use App\Http\Controllers\Admin\EquipmentLoanController as AdminEquipmentLoanController;
 use App\Http\Controllers\Admin\LandingScheduleController;
@@ -162,6 +163,10 @@ Route::middleware(['auth:admin', 'admin'])->prefix('admin')->group(function () {
     Route::get('reports/activity', [ReportingController::class, 'activityReport'])->name('admin.reports.activity');
     Route::get('reports/progress', [ReportingController::class, 'progressReport'])->name('admin.reports.progress');
     Route::get('reports/export', [ReportingController::class, 'export'])->name('admin.reports.export');
+
+    Route::get('notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications.index');
+    Route::post('notifications/read-all', [AdminNotificationController::class, 'markAllRead'])->name('admin.notifications.readAll');
+    Route::post('notifications/{notification}/read', [AdminNotificationController::class, 'markRead'])->name('admin.notifications.read');
 });
 
 // Peserta Routes
@@ -185,8 +190,9 @@ Route::middleware(['auth:peserta', 'peserta'])->prefix('peserta')->group(functio
     
     // Disaster Education
     Route::get('disaster/materials', [DisasterEducationController::class, 'materials'])->name('peserta.disaster.materials');
-    Route::get('disaster/{material}', [DisasterEducationController::class, 'show'])->name('peserta.disaster.show');
     Route::get('disaster/quiz', [DisasterEducationController::class, 'quiz'])->name('peserta.disaster.quiz');
+    Route::post('disaster/quiz', [DisasterEducationController::class, 'submitQuiz'])->name('peserta.disaster.quiz.submit');
+    Route::get('disaster/{material}', [DisasterEducationController::class, 'show'])->name('peserta.disaster.show');
     
     // Progress & Achievements
     Route::get('progress', [ProgressTrackingController::class, 'index'])->name('peserta.progress.index');

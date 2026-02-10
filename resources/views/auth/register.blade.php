@@ -2,69 +2,197 @@
 
 @section('content')
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    :root {
+        --ink: #0f172a;
+        --muted: #64748b;
+        --brand: #0ea5e9;
+        --brand-dark: #0284c7;
+        --accent: #f97316;
+        --surface: #ffffff;
+        --border: #e2e8f0;
+        --ring: rgba(14, 165, 233, 0.2);
+    }
+
     .register-wrapper {
         min-height: calc(100vh - 70px);
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-        padding: 40px 20px;
+        background:
+            radial-gradient(1200px 600px at 12% -10%, rgba(14, 165, 233, 0.16), transparent 60%),
+            radial-gradient(900px 500px at 88% 0%, rgba(249, 115, 22, 0.1), transparent 55%),
+            linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+        padding: 48px 20px;
+        font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
     }
 
-    .register-container {
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    .auth-shell {
+        display: grid;
+        grid-template-columns: 1.05fr 1.6fr;
+        gap: 0;
+        background: var(--surface);
+        border-radius: 20px;
+        box-shadow: 0 30px 80px rgba(15, 23, 42, 0.18);
         overflow: hidden;
-        max-width: 500px;
+        max-width: 1080px;
         width: 100%;
     }
 
-    .register-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    .brand-panel {
+        padding: 46px 40px;
+        background:
+            linear-gradient(145deg, rgba(2, 132, 199, 0.95), rgba(14, 116, 144, 0.92));
         color: white;
-        padding: 40px 30px;
-        text-align: center;
+        position: relative;
     }
 
-    .register-header h1 {
-        font-size: 28px;
+    .brand-logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 8px 14px;
+        border-radius: 999px;
         font-weight: 700;
-        margin-bottom: 10px;
+        letter-spacing: 0.5px;
     }
 
-    .register-header p {
+    .brand-badge {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.2);
+        font-size: 20px;
+    }
+
+    .logo-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-top: 22px;
+    }
+
+    .logo-strip img {
+        max-height: 36px;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 999px;
+        padding: 6px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .logo-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 18px;
+    }
+
+    .logo-strip img {
+        max-height: 28px;
+        background: #ffffff;
+        border-radius: 999px;
+        padding: 5px 8px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 6px 12px rgba(15, 23, 42, 0.08);
+    }
+
+    .brand-title {
+        font-size: 28px;
+        font-weight: 800;
+        margin: 22px 0 12px;
+    }
+
+    .brand-subtitle {
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.6;
+        margin-bottom: 24px;
+        font-size: 15px;
+    }
+
+    .brand-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+    }
+
+    .brand-list li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
         font-size: 14px;
-        opacity: 0.9;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .brand-list i {
+        color: #fff;
+        margin-top: 2px;
+    }
+
+    .form-panel {
+        padding: 46px 42px;
+    }
+
+    .form-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+    }
+
+    .form-header h1 {
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--ink);
         margin: 0;
     }
 
-    .register-body {
-        padding: 40px 30px;
+    .form-header span {
+        font-size: 13px;
+        color: var(--muted);
+    }
+
+    .info-box {
+        background: #fff7ed;
+        border-left: 4px solid var(--accent);
+        padding: 12px;
+        border-radius: 10px;
+        font-size: 12px;
+        margin-bottom: 18px;
+        color: #7c2d12;
     }
 
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
     }
 
     .form-label {
         font-weight: 600;
-        color: #333;
+        color: var(--ink);
         margin-bottom: 8px;
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .form-control {
-        border: 1.5px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 12px 15px;
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 14px;
         font-size: 14px;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
     }
 
     .form-control:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        border-color: var(--brand);
+        box-shadow: 0 0 0 4px var(--ring);
         outline: none;
     }
 
@@ -76,34 +204,34 @@
 
     .btn-register {
         width: 100%;
-        padding: 12px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 12px 14px;
+        background: linear-gradient(135deg, var(--brand), var(--brand-dark));
         color: white;
         border: none;
-        border-radius: 8px;
-        font-weight: 600;
+        border-radius: 10px;
+        font-weight: 700;
         font-size: 14px;
         cursor: pointer;
-        transition: all 0.3s ease;
-        margin-top: 10px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin-top: 6px;
     }
 
     .btn-register:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 12px 24px rgba(14, 165, 233, 0.25);
     }
 
     .login-link {
         text-align: center;
-        padding-top: 20px;
-        border-top: 1px solid #f0f0f0;
+        padding-top: 18px;
+        border-top: 1px solid #f1f5f9;
         font-size: 14px;
     }
 
     .login-link a {
-        color: #667eea;
+        color: var(--brand-dark);
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 700;
     }
 
     .login-link a:hover {
@@ -111,47 +239,64 @@
     }
 
     .alert-danger {
-        border-radius: 8px;
-        margin-bottom: 20px;
+        border-radius: 10px;
+        margin-bottom: 18px;
     }
 
-    .info-box {
-        background: #f0f7ff;
-        border-left: 4px solid #667eea;
-        padding: 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        margin-bottom: 20px;
-        color: #555;
+    @media (max-width: 992px) {
+        .auth-shell {
+            grid-template-columns: 1fr;
+        }
+
+        .brand-panel {
+            padding: 36px 30px;
+        }
     }
 
     @media (max-width: 576px) {
-        .register-header {
-            padding: 30px 20px;
-        }
-
-        .register-header h1 {
-            font-size: 24px;
-        }
-
-        .register-body {
-            padding: 30px 20px;
+        .form-panel {
+            padding: 32px 24px;
         }
 
         .form-row {
             grid-template-columns: 1fr;
         }
+
+        .brand-title {
+            font-size: 24px;
+        }
     }
 </style>
 
 <div class="register-wrapper">
-    <div class="register-container">
-        <div class="register-header">
-            <h1><i class="fas fa-user-plus me-2"></i>Daftar Akun</h1>
-            <p>Bergabunglah dengan program penguatan kami</p>
+    <div class="auth-shell">
+        <div class="brand-panel">
+            <div class="brand-logo">
+                <span class="brand-badge"><i class="fas fa-medal"></i></span>
+                <span>POP-BE</span>
+            </div>
+            <div class="brand-title">Daftar untuk mulai beraksi</div>
+            <div class="brand-subtitle">Akses modul kebugaran, psikososial, dan kesiapsiagaan dengan panduan terstruktur.</div>
+            <ul class="brand-list">
+                <li><i class="fas fa-check-circle"></i>Program latihan & edukasi terintegrasi</li>
+                <li><i class="fas fa-check-circle"></i>Tracking progress yang transparan</li>
+                <li><i class="fas fa-check-circle"></i>Kolaborasi peserta, pelatih, dan admin</li>
+            </ul>
         </div>
 
-        <div class="register-body">
+        <div class="form-panel">
+            <div class="logo-strip">
+                <img src="{{ asset('images/logos/IACBE-Member-with-Accredited-Programs-New-Logo-2024.png') }}" alt="IACBE">
+                <img src="{{ asset('images/logos/logo-bima-21.09.2022.11.56.32.png') }}" alt="BiMA">
+                <img src="{{ asset('images/logos/diktisaintek-berdampak.a30b8719.png') }}" alt="Diktisaintek Berdampak">
+                <img src="{{ asset('images/logos/unimal.png') }}" alt="Universitas Malikussaleh">
+                <img src="{{ asset('images/logos/Logo%20BLU%20Speed.png') }}" alt="BLU">
+                <img src="{{ asset('images/logos/tut-wuri-handayani-logo-with-white-text-png-b461.png') }}" alt="Kemendikbud">
+            </div>
+            <div class="form-header">
+                <h1>Daftar Akun</h1>
+                <span>POP-BE</span>
+            </div>
             @if ($errors->any())
                 <div class="alert alert-danger">
                     @foreach ($errors->all() as $error)

@@ -130,7 +130,12 @@ class AdminDashboardController extends Controller
             ->take(5)
             ->get();
 
+        $adminId = auth('admin')->id();
         $barcodeRequests = Notification::where('category', 'kartu-request')
+            ->where(function ($query) use ($adminId) {
+                $query->whereNull('user_id')
+                    ->orWhere('user_id', $adminId);
+            })
             ->latest()
             ->limit(5)
             ->get();

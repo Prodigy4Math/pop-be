@@ -10,7 +10,7 @@
                     <h1 class="fw-bold mb-2">
                         <i class="fas fa-user-circle me-3"></i>Halo, {{ Auth::guard('peserta')->user()->name }}!
                     </h1>
-                    <p class="mb-0 opacity-90">Selamat datang di Platform Penguatan Olahraga dan Ketahanan Psikososial</p>
+                    <p class="mb-0 opacity-90">Selamat datang di Platform POP-BE dan Ketahanan Psikososial</p>
                 </div>
             </div>
         </div>

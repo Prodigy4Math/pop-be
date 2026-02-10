@@ -24,4 +24,18 @@ class DisasterEducationController extends Controller
     {
         return view('peserta.disaster.quiz');
     }
+
+    public function submitQuiz(Request $request)
+    {
+        $request->validate([
+            'q1' => 'required|in:a,b,c',
+            'q2' => 'required|in:a,b,c',
+            'q3' => 'nullable|array',
+            'q3.*' => 'in:a,b,c',
+        ]);
+
+        return redirect()
+            ->route('peserta.disaster.quiz')
+            ->with('success', 'Jawaban kuis berhasil dikirim.');
+    }
 }

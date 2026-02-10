@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'Penguatan Olahraga') }}</title>
+    <title>{{ config('app.name', 'POP-BE') }}</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -105,14 +105,33 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ url('/') }}">
-                <i class="fas fa-medal me-2"></i>Penguatan Olahraga
+                <i class="fas fa-medal me-2"></i>POP-BE
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
-                    @auth('peserta')
+                    @if(Auth::guard('admin')->check())
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                                <i class="fas fa-gauge-high me-2"></i>Admin Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <span class="nav-link">
+                                <i class="fas fa-user-shield me-2"></i>{{ Auth::guard('admin')->user()->name }}
+                            </span>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{{ route('logout.admin') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-logout btn-sm">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </button>
+                            </form>
+                        </li>
+                    @elseif(Auth::guard('peserta')->check())
                         @if(Auth::guard('peserta')->user()->isPeserta())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('peserta.dashboard') }}">
@@ -143,8 +162,7 @@
                                 </button>
                             </form>
                         </li>
-                    @endauth
-                    @guest('peserta')
+                    @else
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">
                                 <i class="fas fa-sign-in-alt me-2"></i>Login
@@ -155,7 +173,7 @@
                                 <i class="fas fa-user-plus me-2"></i>Register
                             </a>
                         </li>
-                    @endguest
+                    @endif
                 </ul>
             </div>
         </div>
@@ -202,7 +220,7 @@
     <footer class="bg-light py-4 mt-5 border-top">
         <div class="container-fluid text-center text-muted">
             <p class="mb-0">
-                &copy; {{ date('Y') }} Penguatan Olahraga dan Ketahanan Psikososial | 
+                &copy; {{ date('Y') }} POP-BE dan Ketahanan Psikososial | 
                 <small>Develop dengan <i class="fas fa-heart text-danger"></i> untuk generasi muda yang lebih sehat</small>
             </p>
         </div>

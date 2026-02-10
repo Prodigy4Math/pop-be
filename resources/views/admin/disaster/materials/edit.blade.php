@@ -24,16 +24,16 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Tipe Bencana</label>
-                            <select name="disaster_type" class="form-select @error('disaster_type') is-invalid @enderror" required>
-                                <option value="Gempa Bumi" @selected(old('disaster_type', $material->disaster_type) === 'Gempa Bumi')>Gempa Bumi</option>
-                                <option value="Banjir" @selected(old('disaster_type', $material->disaster_type) === 'Banjir')>Banjir</option>
-                                <option value="Longsor" @selected(old('disaster_type', $material->disaster_type) === 'Longsor')>Longsor</option>
-                                <option value="Tsunami" @selected(old('disaster_type', $material->disaster_type) === 'Tsunami')>Tsunami</option>
-                                <option value="Angin Puting Beliung" @selected(old('disaster_type', $material->disaster_type) === 'Angin Puting Beliung')>Angin Puting Beliung</option>
-                                <option value="Kebakaran" @selected(old('disaster_type', $material->disaster_type) === 'Kebakaran')>Kebakaran</option>
+                            <label class="form-label">Kategori Bencana</label>
+                            <select name="category" class="form-select @error('category') is-invalid @enderror" required>
+                                <option value="Gempa Bumi" @selected(old('category', $material->category) === 'Gempa Bumi')>Gempa Bumi</option>
+                                <option value="Banjir" @selected(old('category', $material->category) === 'Banjir')>Banjir</option>
+                                <option value="Longsor" @selected(old('category', $material->category) === 'Longsor')>Longsor</option>
+                                <option value="Tsunami" @selected(old('category', $material->category) === 'Tsunami')>Tsunami</option>
+                                <option value="Angin Puting Beliung" @selected(old('category', $material->category) === 'Angin Puting Beliung')>Angin Puting Beliung</option>
+                                <option value="Kebakaran" @selected(old('category', $material->category) === 'Kebakaran')>Kebakaran</option>
                             </select>
-                            @error('disaster_type')
+                            @error('category')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -48,19 +48,41 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Konten Materi</label>
-                            <textarea name="content" class="form-control @error('content') is-invalid @enderror" 
-                                rows="6" required>{{ old('content', $material->content) }}</textarea>
-                            @error('content')
+                            <label class="form-label">Tipe Konten</label>
+                            <select name="type" class="form-select @error('type') is-invalid @enderror" required>
+                                <option value="teks" @selected(old('type', $material->type) === 'teks')>Teks</option>
+                                <option value="video" @selected(old('type', $material->type) === 'video')>Video</option>
+                                <option value="infografis" @selected(old('type', $material->type) === 'infografis')>Infografis</option>
+                                <option value="pdf" @selected(old('type', $material->type) === 'pdf')>PDF</option>
+                            </select>
+                            @error('type')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">URL File (Opsional)</label>
-                            <input type="text" name="file_url" class="form-control @error('file_url') is-invalid @enderror" 
-                                value="{{ old('file_url', $material->file_url) }}">
-                            @error('file_url')
+                            <label class="form-label">Konten Teks (Opsional)</label>
+                            <textarea name="content_text" class="form-control @error('content_text') is-invalid @enderror" 
+                                rows="6">{{ old('content_text', $material->content_text) }}</textarea>
+                            @error('content_text')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">URL Konten (Opsional)</label>
+                            <input type="text" name="content_url" class="form-control @error('content_url') is-invalid @enderror" 
+                                value="{{ old('content_url', $material->content_url) }}">
+                            @error('content_url')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tingkat Kesulitan (1-5)</label>
+                            <input type="number" name="difficulty_level" class="form-control @error('difficulty_level') is-invalid @enderror" 
+                                value="{{ old('difficulty_level', $material->difficulty_level ?? 1) }}" min="1" max="5" required>
+                            @error('difficulty_level')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

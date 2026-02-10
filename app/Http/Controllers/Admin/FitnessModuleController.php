@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Sport;
 use App\Models\FitnessSchedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FitnessModuleController extends Controller
 {
@@ -26,10 +27,14 @@ class FitnessModuleController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'required|in:kardio,kekuatan,fleksibilitas',
+            'category' => 'required|in:tim,individu',
             'difficulty_level' => 'required|integer|min:1|max:5',
-            'icon' => 'nullable|string',
+            'icon' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        if ($request->hasFile('icon')) {
+            $validated['icon'] = $request->file('icon')->store('sports-icons', 'public');
+        }
 
         Sport::create($validated);
         return redirect()->route('admin.fitness.sports.index')->with('success', 'Olahraga berhasil ditambahkan');
@@ -45,10 +50,19 @@ class FitnessModuleController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'required|in:kardio,kekuatan,fleksibilitas',
+            'category' => 'required|in:tim,individu',
             'difficulty_level' => 'required|integer|min:1|max:5',
-            'icon' => 'nullable|string',
+            'icon' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        if ($request->hasFile('icon')) {
+            if ($sport->icon && Storage::disk('public')->exists($sport->icon)) {
+                Storage::disk('public')->delete($sport->icon);
+            }
+            $validated['icon'] = $request->file('icon')->store('sports-icons', 'public');
+        } else {
+            unset($validated['icon']);
+        }
 
         $sport->update($validated);
         return redirect()->route('admin.fitness.sports.index')->with('success', 'Olahraga berhasil diperbarui');

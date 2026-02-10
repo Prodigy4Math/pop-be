@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Peserta;
 
 use App\Http\Controllers\Controller;
 use App\Models\EquipmentLoanRequest;
+use App\Models\Notification;
 use App\Models\Sport;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EquipmentLoanController extends Controller
@@ -36,7 +38,7 @@ class EquipmentLoanController extends Controller
             'purpose' => ['required', 'string'],
         ]);
 
-        EquipmentLoanRequest::create([
+        $requestRecord = EquipmentLoanRequest::create([
             'user_id' => auth('peserta')->id(),
             'sport_id' => $validated['sport_id'],
             'item_name' => $validated['item_name'],
@@ -46,6 +48,19 @@ class EquipmentLoanController extends Controller
             'purpose' => $validated['purpose'],
             'status' => 'pending',
         ]);
+
+        $admins = User::where('role', 'admin')->get(['id']);
+        foreach ($admins as $admin) {
+            Notification::create([
+                'user_id' => $admin->id,
+                'title' => 'Permintaan Peminjaman Alat',
+                'message' => 'Peserta ' . auth('peserta')->user()->name . ' mengajukan peminjaman "' . $validated['item_name'] . '".',
+                'type' => 'warning',
+                'category' => 'loan-request',
+                'related_model' => EquipmentLoanRequest::class,
+                'related_id' => $requestRecord->id,
+            ]);
+        }
 
         return redirect()
             ->route('peserta.loans.index')

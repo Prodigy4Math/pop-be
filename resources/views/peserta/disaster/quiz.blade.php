@@ -4,9 +4,16 @@
 <div class="container mt-4">
     <h2 class="mb-4"><i class="fas fa-quiz"></i> Kuis Kesiapsiagaan Bencana</h2>
 
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
     <div class="card">
         <div class="card-body">
-            <form action="#" method="POST">
+            <form action="{{ route('peserta.disaster.quiz.submit') }}" method="POST">
                 @csrf
 
                 <div class="mb-4">
@@ -56,19 +63,19 @@
                 <div class="mb-4">
                     <h5>Pertanyaan 3: Apa yang harus disiapkan untuk menghadapi bencana?</h5>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="q3" id="q3a" value="a">
+                        <input class="form-check-input" type="checkbox" name="q3[]" id="q3a" value="a">
                         <label class="form-check-label" for="q3a">
                             Tas darurat dengan dokumen penting
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="q3" id="q3b" value="b">
+                        <input class="form-check-input" type="checkbox" name="q3[]" id="q3b" value="b">
                         <label class="form-check-label" for="q3b">
                             Air minum dan makanan cadangan
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="q3" id="q3c" value="c">
+                        <input class="form-check-input" type="checkbox" name="q3[]" id="q3c" value="c">
                         <label class="form-check-label" for="q3c">
                             P3K dan obat-obatan
                         </label>

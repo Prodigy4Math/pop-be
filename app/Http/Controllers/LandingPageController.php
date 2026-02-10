@@ -13,6 +13,14 @@ class LandingPageController extends Controller
 {
     public function index(Request $request)
     {
+        if (auth('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        if (auth('peserta')->check()) {
+            return redirect()->route('peserta.dashboard');
+        }
+
         $sportId = $request->query('sport_id');
 
         $sports = Sport::orderBy('name')->get();

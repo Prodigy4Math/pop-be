@@ -181,7 +181,7 @@
                     </h5>
                     <div class="alert alert-info" role="alert">
                         <small>
-                            <p><strong>Peserta:</strong> Anak-remaja yang mengikuti program penguatan olahraga dan ketahanan psikososial</p>
+                            <p><strong>Peserta:</strong> Anak-remaja yang mengikuti program POP-BE dan ketahanan psikososial</p>
                             <p><strong>Email:</strong> Harus unik dan valid</p>
                             <p><strong>Password:</strong> Minimal 8 karakter</p>
                             <p><strong>Olahraga:</strong> Diambil dari daftar modul fitness</p>

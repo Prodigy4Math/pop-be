@@ -1,11 +1,11 @@
-# Platform Penguatan Olahraga & Ketahanan Psikososial
+# Platform POP-BE & Ketahanan Psikososial
 ## Dokumentasi Struktur Sistem
 
 ---
 
 ## 📋 RINGKASAN SISTEM
 
-Aplikasi Laravel untuk Program Penguatan Olahraga dan Ketahanan Psikososial dengan 2 role utama:
+Aplikasi Laravel untuk Program POP-BE dan Ketahanan Psikososial dengan 2 role utama:
 - **Admin**: Mengelola peserta, program, jadwal, dan monitoring
 - **Peserta**: Mengakses program, melaporkan progress, dan mendapat badge
 

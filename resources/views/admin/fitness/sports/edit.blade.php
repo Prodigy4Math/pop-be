@@ -17,7 +17,7 @@
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <form action="{{ route('admin.fitness.sports.update', $sport) }}" method="POST">
+                    <form action="{{ route('admin.fitness.sports.update', $sport) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -37,9 +37,8 @@
                             <select class="form-select @error('category') is-invalid @enderror" 
                                     id="category" name="category" required>
                                 <option value="">Pilih Kategori</option>
-                                <option value="kardio" {{ old('category', $sport->category) == 'kardio' ? 'selected' : '' }}>Kardio</option>
-                                <option value="kekuatan" {{ old('category', $sport->category) == 'kekuatan' ? 'selected' : '' }}>Kekuatan</option>
-                                <option value="fleksibilitas" {{ old('category', $sport->category) == 'fleksibilitas' ? 'selected' : '' }}>Fleksibilitas</option>
+                                <option value="tim" {{ old('category', $sport->category) == 'tim' ? 'selected' : '' }}>Tim</option>
+                                <option value="individu" {{ old('category', $sport->category) == 'individu' ? 'selected' : '' }}>Individu</option>
                             </select>
                             @error('category')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -65,10 +64,14 @@
 
                         <!-- Icon -->
                         <div class="mb-3">
-                            <label for="icon" class="form-label fw-bold">Ikon (Font Awesome)</label>
-                            <input type="text" class="form-control @error('icon') is-invalid @enderror" 
-                                   id="icon" name="icon" value="{{ old('icon', $sport->icon) }}">
-                            <small class="text-muted">Preview: <i class="fas fa-{{ $sport->icon ?? 'star' }}"></i></small>
+                            <label for="icon" class="form-label fw-bold">Ikon (Gambar)</label>
+                            <input type="file" class="form-control @error('icon') is-invalid @enderror" 
+                                   id="icon" name="icon" accept="image/*">
+                            @if($sport->icon)
+                                <div class="mt-2">
+                                    <img src="{{ asset('storage/' . $sport->icon) }}" alt="{{ $sport->name }}" style="height: 48px; width: 48px; object-fit: cover;">
+                                </div>
+                            @endif
                             @error('icon')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

@@ -23,17 +23,17 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Tipe Bencana</label>
-                            <select name="disaster_type" class="form-select @error('disaster_type') is-invalid @enderror" required>
-                                <option value="">Pilih Tipe</option>
-                                <option value="Gempa Bumi">Gempa Bumi</option>
-                                <option value="Banjir">Banjir</option>
-                                <option value="Longsor">Longsor</option>
-                                <option value="Tsunami">Tsunami</option>
-                                <option value="Angin Puting Beliung">Angin Puting Beliung</option>
-                                <option value="Kebakaran">Kebakaran</option>
+                            <label class="form-label">Kategori Bencana</label>
+                            <select name="category" class="form-select @error('category') is-invalid @enderror" required>
+                                <option value="">Pilih Kategori</option>
+                                <option value="Gempa Bumi" @selected(old('category') === 'Gempa Bumi')>Gempa Bumi</option>
+                                <option value="Banjir" @selected(old('category') === 'Banjir')>Banjir</option>
+                                <option value="Longsor" @selected(old('category') === 'Longsor')>Longsor</option>
+                                <option value="Tsunami" @selected(old('category') === 'Tsunami')>Tsunami</option>
+                                <option value="Angin Puting Beliung" @selected(old('category') === 'Angin Puting Beliung')>Angin Puting Beliung</option>
+                                <option value="Kebakaran" @selected(old('category') === 'Kebakaran')>Kebakaran</option>
                             </select>
-                            @error('disaster_type')
+                            @error('category')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -48,19 +48,41 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Konten Materi</label>
-                            <textarea name="content" class="form-control @error('content') is-invalid @enderror" 
-                                rows="6" required>{{ old('content') }}</textarea>
-                            @error('content')
+                            <label class="form-label">Tipe Konten</label>
+                            <select name="type" class="form-select @error('type') is-invalid @enderror" required>
+                                <option value="teks" @selected(old('type') === 'teks')>Teks</option>
+                                <option value="video" @selected(old('type') === 'video')>Video</option>
+                                <option value="infografis" @selected(old('type') === 'infografis')>Infografis</option>
+                                <option value="pdf" @selected(old('type') === 'pdf')>PDF</option>
+                            </select>
+                            @error('type')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">URL File (Opsional)</label>
-                            <input type="text" name="file_url" class="form-control @error('file_url') is-invalid @enderror" 
-                                value="{{ old('file_url') }}">
-                            @error('file_url')
+                            <label class="form-label">Konten Teks (Opsional)</label>
+                            <textarea name="content_text" class="form-control @error('content_text') is-invalid @enderror" 
+                                rows="6">{{ old('content_text') }}</textarea>
+                            @error('content_text')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">URL Konten (Opsional)</label>
+                            <input type="text" name="content_url" class="form-control @error('content_url') is-invalid @enderror" 
+                                value="{{ old('content_url') }}">
+                            @error('content_url')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tingkat Kesulitan (1-5)</label>
+                            <input type="number" name="difficulty_level" class="form-control @error('difficulty_level') is-invalid @enderror" 
+                                value="{{ old('difficulty_level', 1) }}" min="1" max="5" required>
+                            @error('difficulty_level')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -88,7 +110,7 @@
         <div class="col-md-4">
             <div class="card bg-light">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-info-circle"></i> Tipe Bencana</h5>
+                    <h5 class="card-title"><i class="fas fa-info-circle"></i> Kategori Bencana</h5>
                     <ul class="small">
                         <li>Gempa Bumi</li>
                         <li>Banjir</li>

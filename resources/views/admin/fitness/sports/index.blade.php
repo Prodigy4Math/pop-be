@@ -40,7 +40,11 @@
                                     @foreach($sports as $sport)
                                     <tr>
                                         <td>
-                                            <i class="fas fa-{{ $sport->icon ?? 'star' }}" style="font-size: 1.5rem; color: #28a745;"></i>
+                                            @if($sport->icon)
+                                                <img src="{{ asset('storage/' . $sport->icon) }}" alt="{{ $sport->name }}" style="height: 36px; width: 36px; object-fit: cover; border-radius: 6px;">
+                                            @else
+                                                <i class="fas fa-image" style="font-size: 1.5rem; color: #28a745;"></i>
+                                            @endif
                                         </td>
                                         <td>
                                             <strong>{{ $sport->name }}</strong>
