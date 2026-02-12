@@ -7,6 +7,7 @@ cmds = ["php -v", "composer install --no-dev --optimize-autoloader"]
 [variables]
 PHP_VERSION = "8.4"
 NIXPACKS_PHP_VERSION = "8.4"
+NIXPACKS_PHP_EXTENSIONS = "gd,pdo_mysql,zip,opcache"
 
 [start]
 cmd = "php -S 0.0.0.0:$PORT -t public"
